@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <title>Animation</title>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="style.css" /> 
-</head>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 200)
+line, = ax.plot(x, np.sin(x))
+ax.set_ylim(-1.5, 1.5)
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))  # shift the wave each frame
+    return line,
+
+anim = FuncAnimation(fig, update, frames=100, interval=30, blit=True)
+
+plt.show()
+# anim.save("wave.gif", writer="pillow", fps=30)  # uncomment to export a GIF
